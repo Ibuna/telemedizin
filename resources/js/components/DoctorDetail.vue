@@ -101,6 +101,7 @@ export default defineComponent({
             },
             visibleFormId: null as number | null,
             errorMessage: '' as string | null,
+            intervalId: null as number | null,
         };
     },
     computed: {
@@ -140,6 +141,9 @@ export default defineComponent({
                 }
             }
         },
+        async checkAvailability(doctorId: number) {
+            await this.mainStore.checkAppointmentAvailability(doctorId);
+        },
         toggleForm(id: number) {
             // Reset form data
             this.form.patient_name = '';
@@ -163,9 +167,16 @@ export default defineComponent({
         const route = useRoute();
         const doctorId = parseInt(route.params.id as string, 10);
         this.fetchDoctor(doctorId);
+        // Check availability every 10 seconds
+        this.intervalId = window.setInterval(() => {
+            this.checkAvailability(doctorId);
+        }, 10000);
     },
     beforeUnmount() {
         this.clearData();
+        if (this.intervalId) {
+            clearInterval(this.intervalId);
+        }
     },
 });
 </script>

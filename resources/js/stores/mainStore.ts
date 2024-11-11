@@ -64,6 +64,15 @@ export const useMainStore = defineStore('main', {
                 console.error('Error searching doctors:', error);
             }
         },
+        async checkAppointmentAvailability(doctorId: number) {
+            try {
+                const response = await axios.get(`/api/doctors/${doctorId}`);
+                this.appointments = response.data.appointments;
+            } catch (error) {
+                console.error('Error checking appointment availability:', error);
+                return false;
+            }
+        },
         clearTimeslots() {
             if (this.doctor) {
                 this.doctor.timeslots = [];

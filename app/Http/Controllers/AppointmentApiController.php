@@ -74,6 +74,12 @@ class AppointmentApiController extends Controller
 
         try {
             $appointment = Appointment::findOrFail($id);
+
+            // Check if appointment is was booked by someone else in the meantime
+            if ($appointment->status === 'booked' && $request->status !== 'available') {
+                return response()->json(['error' => 'Appointment is already booked and cannot be updated'], 409);
+            }
+
             if ($request->has('doctor_id')) {
                 $appointment->doctor_id = $request->doctor_id;
             }
