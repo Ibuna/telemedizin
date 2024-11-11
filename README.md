@@ -62,8 +62,6 @@ Die wichtigsten Dateien befinden sich unter:
 
 Die in der Aufgabe beschriebenen Relationen wurden in den Models festgehalten.
 
-Die verfügbaren Routen sind folgende. Hier ist der korrigierte Satz:
-
 Die verfügbaren Routen sind folgende: API-Routen haben ein `api`-Präfix und sind RESTful aufgebaut.
 
 ```
