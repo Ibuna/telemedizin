@@ -99,9 +99,9 @@ Die wichtigsten Dateien befinden sich unter:
 
 In der Ärzteübersicht, kann ein Arzt angeklickt werden und man kommt in die Detailansicht in der die Sprechzeiten (TimeSlots) und Termine (Appointments) angezeigt werden. Die Termine können gebucht werden. Eine Fehlermeldung kann provoziert werden, wenn der Patientenname kürzer als drei Zeichen ist. Die Validierung erfolgt im Backend. Grundsätzlich sollte schon im Frontend validiert werden, aber aus Zeitgründen wurde darauf verzichtet. Im oberen linken Menü können die gebuchten Termine aufgerufen und storniert werden. Ein User Account existiert nicht, so dass ein Reload der Seite dazu führt, dass die gebuchten Termine nicht mehr angezeigt werden, da sie nicht dem aktuellen User zugeordnet werden.
 
-![Fehler](readme-images/detail-page.png)
+![Fehler](/readme_images/detail-page.png)
 
-![Fehler](readme-images/booked-appointments.png)
+![Gebuchte Termine](/readme-images/booked_appointments.png)
 
 ## Tests
 
@@ -111,7 +111,7 @@ Die Tests sind im '/tests' Ordner. Es gibt ein paar Unit Tests für das Doctor M
 php artisan test
 ```
 
-![Tests](readme-images/tests.png)
+![Tests](/readme_images/tests.png)
 
 ## Bonusaufgaben
 
