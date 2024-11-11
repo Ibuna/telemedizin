@@ -44,7 +44,6 @@ export const useMainStore = defineStore('main', {
                 });
             } catch (error) {
                 throw error;
-                console.error('Error booking appointment:', error);
             }
         },
         async cancelAppointment(id: number) {

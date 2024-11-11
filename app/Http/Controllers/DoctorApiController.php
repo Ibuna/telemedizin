@@ -38,7 +38,7 @@ class DoctorApiController extends Controller
             $doctor->specialization_id = $request->specialization_id;
             $doctor->save();
 
-            return response()->json(['message' => 'Doctor created']);
+            return response()->json(['message' => 'Doctor created'], 201);
         } catch (Exception $e) {
             return response()->json(['error' => 'Failed to create doctor', 'message' => $e->getMessage()], 500);
         }
@@ -97,7 +97,7 @@ class DoctorApiController extends Controller
             $doctor = Doctor::findOrFail($id);
             $doctor->delete();
 
-            return response()->json(['message' => 'Doctor deleted']);
+            return response()->json(['message' => 'Doctor deleted'], 204);
         } catch (Exception $e) {
             return response()->json(['error' => 'Failed to delete doctor', 'message' => $e->getMessage()], 500);
         }

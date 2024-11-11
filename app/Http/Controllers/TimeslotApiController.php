@@ -38,7 +38,7 @@ class TimeslotApiController extends Controller
             $timeslot->start_time = $request->start_time;
             $timeslot->save();
 
-            return response()->json(['message' => 'Timeslot created']);
+            return response()->json(['message' => 'Timeslot created'], 201);
         } catch (Exception $e) {
             return response()->json(['error' => 'Failed to create timeslot', 'message' => $e->getMessage()], 500);
         }
@@ -89,7 +89,7 @@ class TimeslotApiController extends Controller
             $timeSlot = TimeSlot::findOrFail($id);
             $timeSlot->delete();
 
-            return response()->json(['message' => 'Timeslot deleted']);
+            return response()->json(['message' => 'Timeslot deleted'], 204);
         } catch (Exception $e) {
             return response()->json(['error' => 'Failed to delete timeslot', 'message' => $e->getMessage()], 500);
         }

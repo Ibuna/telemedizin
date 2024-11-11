@@ -40,7 +40,7 @@ class AppointmentApiController extends Controller
             $appointment->date_time = $request->date_time;
             $appointment->save();
 
-            return response()->json(['message' => 'Appointment created']);
+            return response()->json(['message' => 'Appointment created'], 201);
         } catch (Exception $e) {
             return response()->json(['error' => 'Failed to create appointment', 'message' => $e->getMessage()], 500);
         }
@@ -112,7 +112,7 @@ class AppointmentApiController extends Controller
             $appointment = Appointment::findOrFail($id);
             $appointment->delete();
 
-            return response()->json(['message' => 'Appointment deleted']);
+            return response()->json(['message' => 'Appointment deleted'], 204);
         } catch (Exception $e) {
             return response()->json(['error' => 'Failed to delete appointment', 'message' => $e->getMessage()], 500);
         }

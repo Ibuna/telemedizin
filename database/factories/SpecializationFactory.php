@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Specialization>
  */
 class SpecializationFactory extends Factory
 {
@@ -16,17 +16,15 @@ class SpecializationFactory extends Factory
      */
     public function definition(): array
     {
-        static $specializations = [
+        $specializations = [
             "Allgemeinmediziner", "Anästhesist", "Augenarzt", "Chirurg", "Dermatologe", 
             "Endokrinologe", "Gastroenterologe", "Gynäkologe", "HNO-Arzt", "Kardiologe", 
             "Nephrologe", "Neurologe", "Onkologe", "Orthopäde", "Pädiater", 
             "Psychiater", "Radiologe", "Rheumatologe", "Urologe", "Zahnarzt"
         ];
 
-        $specialization = array_pop($specializations);
-
         return [
-            'name' => $specialization,
+            'name' => $this->faker->unique()->randomElement($specializations),
         ];
     }
 }
