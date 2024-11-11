@@ -54,6 +54,16 @@ export const useMainStore = defineStore('main', {
                 console.error('Error canceling appointment:', error);
             }
         },
+        async searchDoctors(searchterm: string) {
+            try {
+                const response = await axios.get('/search/doctors', {
+                    params: { searchterm }
+                });
+                this.doctors = response.data;
+            } catch (error) {
+                console.error('Error searching doctors:', error);
+            }
+        },
         clearTimeslots() {
             if (this.doctor) {
                 this.doctor.timeslots = [];
