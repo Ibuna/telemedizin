@@ -4,35 +4,55 @@ Im Folgendem alle Informationen zur Installation und zum Aufbau.
 
 ## Installation
 
-Nachdem das Projekt mit git geklont wurde, müssen composer und npm Dependencies installiert werden. Dafür werden folgende Befehle verwendet:
+Nachdem das Projekt mit git geklont wurde, müssen composer und npm Dependencies installiert werden. Danach kann der Buildprozess aufgerufen werden. Dafür werden folgende Befehle verwendet:
 
 ```bash
 composer install
 npm install
+npm run build
 ```
 
-## Usage
+Achtung: Die ".env" wurde dem Repository hinzugefügt. Dies ist natürlich nicht üblich und wäre in anderen Projekten sicherheitskritisch, dient hier aber der erleichterten Installation.
 
-```python
-import foobar
+Als Datenbank wurde SQLite verwendet um den Installationsaufwand zu begrenzen. Folgende Befehle setzen die Datenbank auf und befüllen sie dann mit Testdaten (die Frage ob die Datenbank angelegt werden soll, muss mit "Yes" beantwortet werden).
 
-# returns 'words'
-foobar.pluralize('word')
-
-# returns 'geese'
-foobar.pluralize('goose')
-
-# returns 'phenomenon'
-foobar.singularize('phenomena')
+ ```bash
+php artisan migrate
+php artisan db:seed
 ```
 
-## Contributing
+Der Deveolpment Server kann nun wie folgt gestartet werden:
 
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
+ ```bash
+php artisan serve
+```
 
-Please make sure to update tests as appropriate.
+## Backend
 
-## License
+Für das Backend wurde Laravel 11 genutzt. Die Erstellung der benötigten Klassen, erfolgte - soweit möglich - mit Artisan. 
 
-[MIT](https://choosealicense.com/licenses/mit/)
+Hier beispielhaft die Befehle für die Erstellung des Doctor Models und anderer Klassen, die hiermit zusammenhängen:
+
+```
+php artisan make:model Doctor
+php artisan make:migration create_doctors_table
+php artisan make:controller DoctorApiController --api
+php artisan make:factory DoctorFactory
+```
+
+## Frontend
+
+Frontend.
+
+## Tests
+
+Tests.
+
+## Bonusaufgaben
+
+### Verfügbarkeitsprüfung
+
+### Suche
+
+### eMail Benachrichtigung
+
