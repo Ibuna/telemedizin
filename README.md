@@ -28,14 +28,14 @@ Applikation key setzen:
 php artisan key:generate
 ```
 
-Als Datenbank wurde SQLite verwendet um den Installationsaufwand zu begrenzen. Folgende Befehle setzen die Datenbank auf und befüllen sie dann mit Testdaten (die Frage ob die Datenbank angelegt werden soll, muss mit "Yes" beantwortet werden).
+Als Datenbank wurde SQLite verwendet und die Datenbank wurde dem Git Repo hinzugefügt um den Installationsaufwand zu begrenzen. Falls eine andere Datenbank genutzt werden soll, sind dies die Befehle um sie aufzusetzen und zu befüllen:
 
  ```bash
 php artisan migrate
 php artisan db:seed
 ```
 
-Der Deveolpment Server kann nun wie folgt gestartet werden:
+Der Deveolpment Server kann nun wie folgt gestartet werden und ist dann verfügbar unter "http://localhost:8000/".
 
 ```bash
 php artisan serve
@@ -97,6 +97,12 @@ Die wichtigsten Dateien befinden sich unter:
 - **Store** -> `\resources\js\stores`
 - **Router** -> `\resources\js\router`
 
+In der Ärzteübersicht, kann ein Arzt angeklickt werden und man kommt in die Detailansicht in der die Sprechzeiten (TimeSlots) und Termine (Appointments) angezeigt werden. Die Termine können gebucht werden. Eine Fehlermeldung kann provoziert werden, wenn der Patientenname kürzer als drei Zeichen ist. Die Validierung erfolgt im Backend. Grundsätzlich sollte schon im Frontend validiert werden, aber aus Zeitgründen wurde darauf verzichtet. Im oberen linken Menü können die gebuchten Termine aufgerufen und storniert werden. Ein User Account existiert nicht, so dass ein Reload der Seite dazu führt, dass die gebuchten Termine nicht mehr angezeigt werden, da sie nicht dem aktuellen User zugeordnet werden.
+
+![Fehler](readme-images/detail-page.png)
+
+![Fehler](readme-images/booked-appointments.png)
+
 ## Tests
 
 Die Tests sind im '/tests' Ordner. Es gibt ein paar Unit Tests für das Doctor Model und die zugehörigen Relationen und ein paar Feature Tests für Doctor und Appointment API. Die Tests werden mit folgendem Befehl aufgerufen:
@@ -105,10 +111,28 @@ Die Tests sind im '/tests' Ordner. Es gibt ein paar Unit Tests für das Doctor M
 php artisan test
 ```
 
+![Tests](readme-images/tests.png)
+
 ## Bonusaufgaben
 
 ### Verfügbarkeitsprüfung
 
+Die store Methode "checkAppointmentAvailability" aktualisiert alle 10 Sekunden die Informationen zu einer Detailseite eines Doktors. Aus Zeitgründen wurde darauf verzichtet, nur die Appointments zu aktualisieren.
+
 ### Suche
 
+Die Suche wurde so aufgesetzt, dass nach Fachgebieten gesucht werden kann. Die Suche erfolgt der Einfachheit halber mit einer einfachen SQL Abfrage, die im entsprechenden Repository liegt. Die beteiligten Klassen sind:
+
+- **Controller** -> \app\Http\Controllers\DoctorSearchController.php
+- **Repository Interface** -> \app\Repositories\DoctorRepositoryInterface.php
+- **Repository** -> \app\Repositories\DoctorRepository.php
+
 ### eMail Benachrichtigung
+
+Wenn ein Appointment gebucht wird, wird eine eMail Benachrichtigung verschickt. Dafür wird die Queue genutzt, damit die Requestbearbeitung möglichst schnell gehalten wird. Die Queue muss per folgendem Befehl gestartet werden:
+
+ ```bash
+php artisan queue:work
+```
+
+Die Mails werden dem Logfile hinzugefügt. Dieses liegt unter "\storage\logs\laravel.log".
