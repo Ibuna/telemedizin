@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Appointment;
 use Exception;
 use App\Rules\AppointmentTimeRule;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AppointmentBooked;
 
 class AppointmentApiController extends Controller
 {
@@ -75,23 +77,15 @@ class AppointmentApiController extends Controller
         try {
             $appointment = Appointment::findOrFail($id);
 
-            // Check if appointment is was booked by someone else in the meantime
+            // Check if appointment was booked by someone else in the meantime
             if ($appointment->status === 'booked' && $request->status !== 'available') {
                 return response()->json(['error' => 'Appointment is already booked and cannot be updated'], 409);
             }
 
-            if ($request->has('doctor_id')) {
-                $appointment->doctor_id = $request->doctor_id;
-            }
-            if ($request->has('patient_name')) {
-                $appointment->patient_name = $request->patient_name;
-            }
-            if ($request->has('patient_email')) {
-                $appointment->patient_email = $request->patient_email;
-            }
-            if ($request->has('date_time')) {
-                $appointment->date_time = $request->date_time;
-            }
+            if ($request->has('doctor_id')) $appointment->doctor_id = $request->doctor_id;
+            if ($request->has('patient_name')) $appointment->patient_name = $request->patient_name;
+            if ($request->has('patient_email')) $appointment->patient_email = $request->patient_email;
+            if ($request->has('date_time')) $appointment->date_time = $request->date_time;
             if ($request->has('status')) {
                 $appointment->status = $request->status;
                 // Delte patient name and email if status is available
@@ -102,6 +96,11 @@ class AppointmentApiController extends Controller
             }
     
             $appointment->save();
+
+            // Send email if appointment is booked
+            if ($appointment->status === 'booked') {
+                Mail::to($appointment->patient_email)->queue(new AppointmentBooked($appointment));
+            }
 
             return response()->json(['message' => 'Appointment updated']);
         } catch (Exception $e) {
