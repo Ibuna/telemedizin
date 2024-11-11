@@ -101,7 +101,7 @@ In der Ärzteübersicht, kann ein Arzt angeklickt werden und man kommt in die De
 
 ![Fehler](/readme_images/detail-page.png)
 
-![Gebuchte Termine](/readme-images/booked_appointments.png)
+![Gebuchte Termine](/readme_images/booked-appointments.png)
 
 ## Tests
 
