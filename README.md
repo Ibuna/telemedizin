@@ -1,6 +1,6 @@
 # Testaufgabe Telemedizin
 
-Im Folgendem alle Informationen zur Installation und zum Aufbau.
+Im Folgenden findest du alle Informationen zur Installation und zum Aufbau.
 
 ## Voraussetzungen
 
@@ -8,7 +8,7 @@ PHP, composer und Node.js bzw. npm werden benötigt.
 
 ## Installation
 
-Nachdem das Projekt mit git geklont wurde und das Projektverzeichnis aufgerufen wurde, müssen composer und npm Dependencies installiert werden. Danach kann der Buildprozess aufgerufen werden. Dafür werden folgende Befehle verwendet:
+Nachdem das Projekt mit Git geklont wurde und das Projektverzeichnis aufgerufen wurde, müssen die Composer- und npm-Abhängigkeiten installiert werden. Anschließend kann der Build-Prozess gestartet werden. Dafür werden folgende Befehle verwendet:
 
 ```bash
 composer install
@@ -16,7 +16,7 @@ npm install
 npm run build
 ```
 
-Als .env Datei mit allen evironmentspezifischen Werten, kann die .env.example genutzt werden, da keine besonderen Konfigurationen benötigt werden.
+Für die .env-Datei mit allen umgebungsspezifischen Werten kann die .env.example-Datei verwendet werden, da keine besonderen Konfigurationen erforderlich sind.
 
 ```bash
 cp .env.example .env
@@ -35,7 +35,7 @@ php artisan migrate
 php artisan db:seed
 ```
 
-Der Deveolpment Server kann nun wie folgt gestartet werden und ist dann verfügbar unter "http://localhost:8000/".
+Der Development-Server kann wie folgt gestartet werden und ist dann unter http://localhost:8000/ erreichbar:
 
 ```bash
 php artisan serve
@@ -43,7 +43,7 @@ php artisan serve
 
 ## Backend
 
-Für das Backend wurde Laravel 11 genutzt. Die Erstellung der benötigten Klassen, erfolgte - soweit möglich - mit Artisan. 
+Für das Backend wurde Laravel 11 genutzt. Die Erstellung der benötigten Klassen erfolgte, soweit möglich, mit Artisan. 
 
 Hier beispielhaft die Befehle für die Erstellung des Doctor Models und anderer Klassen, die hiermit zusammenhängen:
 
@@ -87,7 +87,7 @@ GET|HEAD        search/doctors ......................................... DoctorS
 
 ## Frontend
 
-Das Frontend wurde mit Vue.js, Pinia als Store für das State Management, Tailwind als CSS Framework und DaisyUI als Tailwind Komponentenbibliothek, aufgebaut.
+Das Frontend wurde mit Vue.js, Pinia für das State Management, Tailwind CSS als Framework und DaisyUI als Komponentenbibliothek entwickelt.
 
 Die wichtigsten Dateien befinden sich unter:
 
@@ -95,7 +95,7 @@ Die wichtigsten Dateien befinden sich unter:
 - **Store** -> `\resources\js\stores`
 - **Router** -> `\resources\js\router`
 
-In der Ärzteübersicht, kann ein Arzt angeklickt werden und man kommt in die Detailansicht in der die Sprechzeiten (TimeSlots) und Termine (Appointments) angezeigt werden. Die Termine können gebucht werden. Eine Fehlermeldung kann provoziert werden, wenn der Patientenname kürzer als drei Zeichen ist. Die Validierung erfolgt im Backend. Grundsätzlich sollte schon im Frontend validiert werden, aber aus Zeitgründen wurde darauf verzichtet. Im oberen linken Menü können die gebuchten Termine aufgerufen und storniert werden. Ein User Account existiert nicht, so dass ein Reload der Seite dazu führt, dass die gebuchten Termine nicht mehr angezeigt werden, da sie nicht dem aktuellen User zugeordnet werden.
+In der Ärzteübersicht, kann ein Arzt angeklickt werden und man kommt in die Detailansicht in der die Sprechzeiten (TimeSlots) und Termine (Appointments) angezeigt werden. Die Termine können gebucht werden. Eine Fehlermeldung wird ausgelöst, wenn der Patientenname weniger als drei Zeichen enthält. Die Validierung erfolgt aktuell im Backend. Idealerweise sollte die Validierung bereits im Frontend stattfinden, dies wurde jedoch aus Zeitgründen nicht umgesetzt. Im oberen linken Menü können die gebuchten Termine aufgerufen und storniert werden. Ein User Account existiert nicht, so dass ein Reload der Seite dazu führt, dass die gebuchten Termine nicht mehr angezeigt werden, da sie nicht dem aktuellen User zugeordnet werden.
 
 ![Fehler](/readme_images/detail-page.png)
 
@@ -103,7 +103,7 @@ In der Ärzteübersicht, kann ein Arzt angeklickt werden und man kommt in die De
 
 ## Tests
 
-Die Tests sind im '/tests' Ordner. Es gibt ein paar Unit Tests für das Doctor Model und die zugehörigen Relationen und ein paar Feature Tests für Doctor und Appointment API. Die Tests werden mit folgendem Befehl aufgerufen:
+Die Tests befinden sich im Verzeichnis /tests. Es gibt Unit-Tests für das Doctor-Model und die zugehörigen Relationen sowie einige Feature-Tests für die Doctor- und Appointment-APIs. Die Tests werden mit folgendem Befehl aufgerufen:
 
  ```bash
 php artisan test
@@ -115,7 +115,7 @@ php artisan test
 
 ### Verfügbarkeitsprüfung
 
-Die store Methode "checkAppointmentAvailability" aktualisiert alle 10 Sekunden die Informationen zu einer Detailseite eines Doktors. Aus Zeitgründen wurde darauf verzichtet, nur die Appointments zu aktualisieren.
+Die Methode "checkAppointmentAvailability" aktualisiert alle 10 Sekunden die Informationen zu einer Detailseite eines Doktors. Aus Zeitgründen wurde darauf verzichtet, nur die Appointments zu aktualisieren.
 
 ### Suche
 
@@ -127,7 +127,7 @@ Die Suche wurde so aufgesetzt, dass nach Fachgebieten gesucht werden kann. Die S
 
 ### eMail Benachrichtigung
 
-Wenn ein Appointment gebucht wird, wird eine eMail Benachrichtigung verschickt. Dafür wird die Queue genutzt, damit die Requestbearbeitung möglichst schnell gehalten wird. Die Queue muss per folgendem Befehl gestartet werden:
+Bei der Buchung eines Termins wird eine E-Mail-Benachrichtigung versendet. Diese erfolgt asynchron über eine Queue, um die Anfragen so schnell wie möglich zu bearbeiten. Die Queue kann mit folgendem Befehl gestartet werden:
 
  ```bash
 php artisan queue:work
