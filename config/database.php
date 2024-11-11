@@ -42,6 +42,17 @@ return [
             'synchronous' => null,
         ],
 
+       'sqlitetest' => [
+            'driver' => 'sqlite',
+            'url' => env('DB_URL_TEST'),
+            'database' => env('DB_DATABASE_TEST', database_path('databasetest.sqlite')),
+            'prefix' => '',
+            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
+            'busy_timeout' => null,
+            'journal_mode' => null,
+            'synchronous' => null,
+        ],
+        
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DB_URL'),

@@ -18,10 +18,6 @@ class DoctorApiControllerTest extends TestCase
 
         // Add specializations for foreign key constraint
         Specialization::factory(20)->create();
-
-        // Add doctors, timeslots, and appointments for testing
-        Doctor::factory(20)->create();
-        TimeSlot::factory(60)->create();
     }
 
     public function test_index_returns_successful_response()
@@ -32,6 +28,8 @@ class DoctorApiControllerTest extends TestCase
 
     public function test_show_returns_data_response()
     {
+        $this->createDoctorWithTimeslotsAndAppointments();
+
         $response = $this->get('api/doctors/1');
         // Assert json structure
         $response->assertJsonStructure([
@@ -75,5 +73,26 @@ class DoctorApiControllerTest extends TestCase
 
         $response->assertStatus(201);
         $this->assertDatabaseHas('doctors', ['name' => 'Dr. John Doe']);
+    }
+
+    private function createDoctorWithTimeslotsAndAppointments()
+    {
+        $doctor = new Doctor();
+        $doctor->name = 'Dr. John Doe';
+        $doctor->specialization_id = 1;
+        $doctor->save();
+
+        $appointment = new Appointment();
+        $appointment->doctor_id = $doctor->id;
+        $appointment->date_time = '2021-01-01 10:00:00';
+        $appointment->status = 'avalable';
+        $doctor->appointments()->save($appointment);
+
+        $timeSlot = new TimeSlot();
+        $timeSlot->doctor_id = $doctor->id;
+        $timeSlot->start_time = '2021-01-01 10:00:00';
+        $timeSlot->end_time = '2021-01-01 10:15:00';
+        $timeSlot->is_available = true;
+        $doctor->timeslots()->save($timeSlot);
     }
 }
